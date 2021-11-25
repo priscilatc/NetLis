@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.TipoMuestra
+namespace Aplicacion.Pais
 {
-    public class Nuevo
+    public class Editar
     {
         public class Ejecuta : IRequest
         {
+            public Guid IdPais { get; set; }
             public string Descripcion { get; set; }
-
             public int Estado { get; set; }
         }
         public class Manejador : IRequestHandler<Ejecuta>
@@ -27,22 +27,22 @@ namespace Aplicacion.TipoMuestra
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var tipo_muestra = new TblCatTipoMuestra
+                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
+                if (pais == null)
                 {
-                    IdTipoMuestra = Guid.NewGuid(),
-                    Descripcion = request.Descripcion,
-                    Estado = request.Estado,
+                    throw new Exception("El país no está en el sistema");
+                }
 
-                };
+                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
 
-                _context.TblCatTipoMuestras.Add(tipo_muestra);
-                var valor = await _context.SaveChangesAsync();
-                if (valor > 0)
+                var resultado = await _context.SaveChangesAsync();
+                if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("No se pudo guardar el tipo de muestra");
+                throw new Exception("Error al modificar el país");
             }
+
         }
     }
 }

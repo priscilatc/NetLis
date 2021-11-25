@@ -1,5 +1,6 @@
 ﻿using Aplicacion.TipoMuestra;
 using Dominio.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,26 @@ namespace WebAPI.Controllers
         {
             return await Mediator.Send(new Consulta.Ejecuta());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TblCatTipoMuestra>> Detalle(Guid id)
+        {
+            return await Mediator.Send(new ConsultaId.TipoMuestraUnico { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Crear(Nuevo.Ejecuta data)
+        {
+            return await Mediator.Send(data);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Unit>> Editar(Guid id, Editar.Ejecuta data)
+        {
+            data.IdTipoMuestra = id;
+
+            return await Mediator.Send(data);
+        }
+
     }
 }
