@@ -8,15 +8,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.TipoMuestra
+namespace Aplicacion.Sexo
 {
     public class Editar
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdTipoMuestra { get; set; }
+            public Guid IdSexo { get; set; }
             public string Descripcion { get; set; }
-            public int Estado { get; set; }
         }
         public class Manejador : IRequestHandler<Ejecuta>
         {
@@ -28,22 +27,22 @@ namespace Aplicacion.TipoMuestra
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var tipo_muestra = await _context.TblCatTipoMuestras.FindAsync(request.IdTipoMuestra);
-                if (tipo_muestra == null)
+                var sexo = await _context.TblCatSexos.FindAsync(request.IdSexo);
+                if (sexo == null)
                 {
-                    throw new Exception("El tipo de muestra no está en el sistema" );
+                    throw new Exception("El sexo no está en el sistema");
                 }
 
-                tipo_muestra.Descripcion = request.Descripcion ?? tipo_muestra.Descripcion;
+                sexo.Descripcion = request.Descripcion ?? sexo.Descripcion;
 
                 var resultado = await _context.SaveChangesAsync();
                 if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el tipo de muestra");
+                throw new Exception("Error al modificar el sexo");
             }
 
         }
-    }   
+    }
 }

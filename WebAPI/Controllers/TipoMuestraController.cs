@@ -2,6 +2,7 @@
 using Dominio.Model;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace WebAPI.Controllers
             data.IdTipoMuestra = id;
 
             return await Mediator.Send(data);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> Eliminar(Guid id)
+        {
+            return await Mediator.Send(new Eliminar.Ejecuta { Id = id });
         }
 
     }
