@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.TipoMuestra
+namespace Aplicacion.TipoServicio
 {
     public class ConsultaId
     {
-        public class TipoMuestraUnico : IRequest<TblCatTipoMuestra>
+        public class TipoServicioUnico : IRequest<TblCatTipoServicio>
         {
             public Guid Id { get; set; }
         }
 
-        public class Manejador : IRequestHandler<TipoMuestraUnico, TblCatTipoMuestra>
+        public class Manejador : IRequestHandler<TipoServicioUnico, TblCatTipoServicio>
         {
             private readonly netLisContext _context;
             public Manejador(netLisContext context)
@@ -24,12 +24,12 @@ namespace Aplicacion.TipoMuestra
                 _context = context;
             }
 
-            public async Task<TblCatTipoMuestra> Handle(TipoMuestraUnico request, CancellationToken cancellationToken)
+            public async Task<TblCatTipoServicio> Handle(TipoServicioUnico request, CancellationToken cancellationToken)
             {
-                var tipo_muestra = await _context.TblCatTipoMuestras.FindAsync(request.Id);
-                return tipo_muestra;
+                var tipo_servicio = await _context.TblCatTipoServicios.FindAsync(request.Id);
+                return tipo_servicio;
             }
-            
+
         }
     }
 }

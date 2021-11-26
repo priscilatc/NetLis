@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.TipoMuestra
+namespace Aplicacion.TipoOrden
 {
     public class ConsultaId
     {
-        public class TipoMuestraUnico : IRequest<TblCatTipoMuestra>
+        public class TipoOrdenUnico : IRequest<TblCatTipoOrden>
         {
             public Guid Id { get; set; }
         }
 
-        public class Manejador : IRequestHandler<TipoMuestraUnico, TblCatTipoMuestra>
+        public class Manejador : IRequestHandler<TipoOrdenUnico, TblCatTipoOrden>
         {
             private readonly netLisContext _context;
             public Manejador(netLisContext context)
@@ -24,12 +24,12 @@ namespace Aplicacion.TipoMuestra
                 _context = context;
             }
 
-            public async Task<TblCatTipoMuestra> Handle(TipoMuestraUnico request, CancellationToken cancellationToken)
+            public async Task<TblCatTipoOrden> Handle(TipoOrdenUnico request, CancellationToken cancellationToken)
             {
-                var tipo_muestra = await _context.TblCatTipoMuestras.FindAsync(request.Id);
-                return tipo_muestra;
+                var tipo_orden = await _context.TblCatTipoOrdens.FindAsync(request.Id);
+                return tipo_orden;
             }
-            
+
         }
     }
 }

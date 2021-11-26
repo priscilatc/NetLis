@@ -3,19 +3,19 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Pais
+namespace Aplicacion.TipoOrden
 {
     public class Editar
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdPais { get; set; }
+            public Guid IdTipoOrden { get; set; }
             public string Descripcion { get; set; }
-            public int Estado { get; set; }
         }
         public class Manejador : IRequestHandler<Ejecuta>
         {
@@ -27,23 +27,21 @@ namespace Aplicacion.Pais
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
-                if (pais == null)
+                var tipo_orden = await _context.TblCatTipoOrdens.FindAsync(request.IdTipoOrden);
+                if (tipo_orden == null)
                 {
-                    throw new Exception("El país no está en el sistema");
+                    throw new Exception("El tipo de orden no está en el sistema");
                 }
 
-                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
-                pais.Estado = 2;
+                tipo_orden.Descripcion = request.Descripcion ?? tipo_orden.Descripcion;
 
                 var resultado = await _context.SaveChangesAsync();
                 if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el país");
+                throw new Exception("Error al modificar el tipo de orden");
             }
-
         }
     }
 }

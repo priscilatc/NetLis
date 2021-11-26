@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Pais
+namespace Aplicacion.Profesiones
 {
-    public class Editar
+    public class Nuevo
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdPais { get; set; }
             public string Descripcion { get; set; }
             public int Estado { get; set; }
         }
+
         public class Manejador : IRequestHandler<Ejecuta>
         {
             private readonly netLisContext _context;
@@ -27,23 +27,22 @@ namespace Aplicacion.Pais
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
-                if (pais == null)
+                var profesion = new TblCatProfesiones
                 {
-                    throw new Exception("El país no está en el sistema");
-                }
+                    IdProfesiones = Guid.NewGuid(),
+                    Descripcion = request.Descripcion,
+                    Estado = request.Estado,
 
-                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
-                pais.Estado = 2;
+                };
 
-                var resultado = await _context.SaveChangesAsync();
-                if (resultado > 0)
+                _context.TblCatProfesiones.Add(profesion);
+                var valor = await _context.SaveChangesAsync();
+                if (valor > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el país");
+                throw new Exception("No se pudo guardar la profesion");
             }
-
         }
     }
 }

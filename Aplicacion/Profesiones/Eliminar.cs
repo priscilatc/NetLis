@@ -1,22 +1,22 @@
 ﻿using Dominio.Model;
 using MediatR;
+using Persistencia;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Pais
+namespace Aplicacion.Profesiones
 {
-    public class Editar
+    public class Eliminar
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdPais { get; set; }
-            public string Descripcion { get; set; }
-            public int Estado { get; set; }
+            public Guid Id { get; set; }
         }
+
         public class Manejador : IRequestHandler<Ejecuta>
         {
             private readonly netLisContext _context;
@@ -27,23 +27,21 @@ namespace Aplicacion.Pais
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
-                if (pais == null)
+                var profesion = await _context.TblCatProfesiones.FindAsync(request.Id);
+                if (profesion == null)
                 {
-                    throw new Exception("El país no está en el sistema");
-                }
 
-                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
-                pais.Estado = 2;
+                    throw new Exception("La profesión no existe");
+                }
+                _context.Remove(profesion);
 
                 var resultado = await _context.SaveChangesAsync();
                 if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el país");
+                throw new Exception("Error al eliminar la profesión");
             }
-
         }
     }
 }

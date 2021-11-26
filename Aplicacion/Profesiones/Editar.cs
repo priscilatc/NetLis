@@ -3,17 +3,18 @@ using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Pais
+namespace Aplicacion.Profesiones
 {
     public class Editar
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdPais { get; set; }
+            public Guid IdProfesiones { get; set; }
             public string Descripcion { get; set; }
             public int Estado { get; set; }
         }
@@ -27,21 +28,20 @@ namespace Aplicacion.Pais
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
-                if (pais == null)
+                var profesion = await _context.TblCatProfesiones.FindAsync(request.IdProfesiones);
+                if (profesion == null)
                 {
-                    throw new Exception("El país no está en el sistema");
+                    throw new Exception("La profesión no está en el sistema");
                 }
 
-                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
-                pais.Estado = 2;
+                profesion.Descripcion = request.Descripcion ?? profesion.Descripcion;
 
                 var resultado = await _context.SaveChangesAsync();
                 if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el país");
+                throw new Exception("Error al modificar la profesión");
             }
 
         }

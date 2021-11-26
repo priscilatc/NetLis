@@ -31,7 +31,7 @@ namespace Aplicacion.Pais
                 {
                     IdPais = Guid.NewGuid(),
                     Descripcion = request.Descripcion,
-                    Estado = request.Estado,
+                    Estado = 1,
 
                 };
 

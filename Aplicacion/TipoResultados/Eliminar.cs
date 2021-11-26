@@ -7,16 +7,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Pais
+namespace Aplicacion.TipoResultados
 {
-    public class Editar
+    public class Eliminar
     {
         public class Ejecuta : IRequest
         {
-            public Guid IdPais { get; set; }
-            public string Descripcion { get; set; }
-            public int Estado { get; set; }
+            public Guid Id { get; set; }
         }
+
         public class Manejador : IRequestHandler<Ejecuta>
         {
             private readonly netLisContext _context;
@@ -27,23 +26,21 @@ namespace Aplicacion.Pais
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var pais = await _context.TblCatPais.FindAsync(request.IdPais);
-                if (pais == null)
+                var tipo_resultado = await _context.TblCatTipoResultados.FindAsync(request.Id);
+                if (tipo_resultado == null)
                 {
-                    throw new Exception("El país no está en el sistema");
-                }
 
-                pais.Descripcion = request.Descripcion ?? pais.Descripcion;
-                pais.Estado = 2;
+                    throw new Exception("El tipo de resultado no existe");
+                }
+                _context.Remove(tipo_resultado);
 
                 var resultado = await _context.SaveChangesAsync();
                 if (resultado > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("Error al modificar el país");
+                throw new Exception("Error al eliminar el tipo de resultado");
             }
-
         }
     }
 }
