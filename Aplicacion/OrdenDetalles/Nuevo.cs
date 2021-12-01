@@ -7,14 +7,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.EstadoCivil
+namespace Aplicacion.OrdenDetalles
 {
     public class Nuevo
     {
         public class Ejecuta : IRequest
         {
-            public string Descripcion { get; set; }
-            public int Estado { get; set; }
+            public Guid IdOrden { get; set; }
+            public string NOrden { get; set; }
+            public Guid IdExamen { get; set; }
+            public string Activo { get; set; }
         }
 
         public class Manejador : IRequestHandler<Ejecuta>
@@ -27,21 +29,22 @@ namespace Aplicacion.EstadoCivil
 
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var estado_civil = new TblCatEstadoCivil
+                var orden_detalle = new TblOrdenesDetalle
                 {
-                    IdEstadoCivil = Guid.NewGuid(),
-                    Descripcion = request.Descripcion,
-                    Estado = request.Estado,
-
+                    IdOrdenDetalle = new Guid(),
+                    IdOrden = request.IdOrden,
+                    NOrden = request.NOrden,
+                    IdExamen = request.IdExamen,
+                    Activo = request.Activo,
                 };
 
-                _context.TblCatEstadoCivils.Add(estado_civil);
+                _context.TblOrdenesDetalles.Add(orden_detalle);
                 var valor = await _context.SaveChangesAsync();
                 if (valor > 0)
                 {
                     return Unit.Value;
                 }
-                throw new Exception("No se pudo guardar el estado civil");
+                throw new Exception("No se pudo guardar el tipo de orden");
             }
         }
     }

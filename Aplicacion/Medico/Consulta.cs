@@ -8,23 +8,23 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Aplicacion.Nacionalidad
+namespace Aplicacion.Medico
 {
     public class Consulta
     {
-        public class Ejecuta : IRequest<List<TblCatNacionalidad>> { }
+        public class Ejecuta : IRequest<List<TblMedico>> { }
 
-        public class Manejador : IRequestHandler<Ejecuta, List<TblCatNacionalidad>>
+        public class Manejador : IRequestHandler<Ejecuta, List<TblMedico>>
         {
             private readonly netLisContext _context;
             public Manejador(netLisContext context)
             {
                 _context = context;
             }
-            public async Task<List<TblCatNacionalidad>> Handle(Ejecuta request, CancellationToken cancellationToken)
+            public async Task<List<TblMedico>> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var nacionalidad = await _context.TblCatNacionalidads.ToListAsync();
-                return nacionalidad;
+                var medico = await _context.TblMedicos.ToListAsync();
+                return medico;
             }
         }
     }

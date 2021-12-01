@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace WebAPI
 {
@@ -41,6 +42,7 @@ namespace WebAPI
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddMediatR(typeof(Consulta));
+            services.AddAutoMapper(typeof(Consulta.Manejador));
 
             var builder = services.AddIdentityCore<TblUsuario>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
