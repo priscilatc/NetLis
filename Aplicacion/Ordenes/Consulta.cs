@@ -1,4 +1,5 @@
-﻿using Dominio.Model;
+﻿using AutoMapper;
+using Dominio.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,13 +18,18 @@ namespace Aplicacion.Ordenes
         public class Manejador : IRequestHandler<Ejecuta, List<TblOrdenes>>
         {
             private readonly netLisContext _context;
-            public Manejador(netLisContext context)
+            private readonly IMapper _mapper;
+            public Manejador(netLisContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
             public async Task<List<TblOrdenes>> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var ordenes = await _context.TblOrdenes.ToListAsync();
+                var ordenes = await _context.TblOrdenes.Include(x => x.TblOrdenesDetalles)
+                    .ThenInclude(x => x.IdOrdenDetalle)
+                    .ToListAsync();
+                var ordenesdto = _mapper.Map<List<TblOrdenes>, List<OrdenesDto>>(ordenes);
                 return ordenes;
             }
         }

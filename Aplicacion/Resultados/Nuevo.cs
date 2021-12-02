@@ -38,7 +38,7 @@ namespace Aplicacion.Resultados
                     Resultado = request.Resultado,
                     Observaciones = request.Observacion,
                     Procesado = request.Procesado,
-                    Estado = request.Estado,
+                    Estado = 1
                 };
                 _context.TblResultados.Add(resultado);
                 var valor = await _context.SaveChangesAsync();

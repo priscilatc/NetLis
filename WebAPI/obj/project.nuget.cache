@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "QkAnkEUYFcWFfgo9bNNQoaqXc2btOPOJoLd2VuMTNjznmah/AHg0z0yZvOKPttxwaT/pJrQyIjICNu3tfwy0dQ==",
+  "dgSpecHash": "Ldt1xbNZBdvQhOieCKlPk4hrJPeKojg0ExDKKhqrvGN/GL2raV0yFDt96VR5vvMjK5krgssTg3SDCSATb3bYqA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Priscila\\Downloads\\netLis\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Priscila\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\Priscila\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\Priscila\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Priscila\\.nuget\\packages\\mediatr\\9.0.0\\mediatr.9.0.0.nupkg.sha512",
     "C:\\Users\\Priscila\\.nuget\\packages\\mediatr.extensions.microsoft.dependencyinjection\\9.0.0\\mediatr.extensions.microsoft.dependencyinjection.9.0.0.nupkg.sha512",
