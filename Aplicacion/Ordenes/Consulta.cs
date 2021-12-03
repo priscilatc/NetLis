@@ -26,10 +26,7 @@ namespace Aplicacion.Ordenes
             }
             public async Task<List<TblOrdenes>> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var ordenes = await _context.TblOrdenes.Include(x => x.TblOrdenesDetalles)
-                    .ThenInclude(x => x.IdOrdenDetalle)
-                    .ToListAsync();
-                var ordenesdto = _mapper.Map<List<TblOrdenes>, List<OrdenesDto>>(ordenes);
+                var ordenes = await _context.TblOrdenes.ToListAsync();
                 return ordenes;
             }
         }

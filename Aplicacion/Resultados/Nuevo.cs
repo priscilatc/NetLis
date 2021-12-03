@@ -15,12 +15,12 @@ namespace Aplicacion.Resultados
             public Guid IdExamen { get; set; }
             public Guid IdOrden { get; set; }
             public string Resultado { get; set; }
-            public string Observacion { get; set; }
+            public string Observaciones { get; set; }
             public string Procesado { get; set; }
             public int Estado { get; set; }
         }
 
-        public class Manejador : IRequest<Ejecuta>
+        public class Manejador : IRequestHandler<Ejecuta>
         {
             private readonly netLisContext _context;
             public Manejador(netLisContext context)
@@ -29,14 +29,13 @@ namespace Aplicacion.Resultados
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                Guid idresultado = Guid.NewGuid();
                 var resultado = new TblResultado
                 {
-                    IdResultados = idresultado,
+                    IdResultados = Guid.NewGuid(),
                     IdExamen = request.IdExamen,
                     IdOrden = request.IdOrden,
                     Resultado = request.Resultado,
-                    Observaciones = request.Observacion,
+                    Observaciones = request.Observaciones,
                     Procesado = request.Procesado,
                     Estado = 1
                 };

@@ -31,7 +31,6 @@ namespace Aplicacion.AreaLabServicio
                 {
                     IdAreaLabServicio = Guid.NewGuid(),
                     Descripcion = request.Descripcion,
-
                 };
 
                 _context.TblCatAreasLabServicios.Add(arealab_serv);

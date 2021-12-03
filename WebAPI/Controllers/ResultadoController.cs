@@ -1,5 +1,6 @@
 ﻿using Aplicacion.Resultados;
 using Dominio.Model;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,12 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<List<TblResultado>>> Get()
         {
             return await Mediator.Send(new Consulta.Ejecuta());
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Crear(Nuevo.Ejecuta data)
+        {
+            return await Mediator.Send(data);
         }
     }
 }

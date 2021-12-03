@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aplicacion.Examenes
 {
-    class ExamenDto
+    public class ExamenDto
     {
     }
 }
